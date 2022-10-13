@@ -7,8 +7,34 @@ ha intentado adivinar el número. Si el usuario introduce algo que no es un núm
 controlar esa excepción e indicarlo por pantalla. En este último caso también se debe contar el 
 carácter fallido como un intento. */
 
+import java.util.InputMismatchException;
+import java.util.Scanner;
+
+
 public class App {
     public static void main(String[] args) {
-        
+        int numeroAleatorio = (int) (Math.random() * 499 + 1);
+        int numeroIngresado = 0;
+        int count = 0;
+        System.out.println("¡Vamos a jugar! Adivine cual es el número");
+        do {
+            try {
+                Scanner sn = new Scanner(System.in);
+                System.out.println("Ingrese un número entre 1 y 500"); 
+                numeroIngresado = sn.nextInt();
+                if (numeroIngresado < numeroAleatorio) {
+                    System.out.println("¡Intento fallido! El número ingresado es menor al número a adivinar");
+                } else if (numeroIngresado > numeroAleatorio){
+                    System.out.println("¡Intento fallido! El número ingresado es mayor al número a adivinar");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("¡Intento fallido! El dato ingresado no es un número entero");
+            } catch (Exception e) {
+                System.out.println(e.toString() + " ¡Intento fallido! Ocurrió un error inesperado");
+            }
+            count++;
+
+        } while (numeroIngresado != numeroAleatorio);
+        System.out.println("Felicitaciones adivinó el número en el intento # " + count);
     }
 }
